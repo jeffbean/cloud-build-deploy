@@ -1,0 +1,15 @@
+sudo: required
+
+language: go
+
+services:
+  - docker
+  - redis-server
+
+before_install:
+  - docker build -t jeffbean/cloud-build-deploy .
+  - docker ps -a
+  - docker run jeffbean/cloud-build-deploy
+
+script:
+  - go test
