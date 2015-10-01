@@ -1,6 +1,9 @@
 sudo: required
 
 language: go
+go:
+  - 1.5
+  - tip
 
 services:
   - docker
@@ -9,7 +12,4 @@ services:
 before_install:
   - docker build -t jeffbean/cloud-build-deploy .
   - docker ps -a
-  - docker run jeffbean/cloud-build-deploy
-
-script:
-  - go test
+  - docker run jeffbean/cloud-build-deploy go test
