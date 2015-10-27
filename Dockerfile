@@ -1,1 +1,4 @@
-FROM golang:1.5-onbuild
+FROM busybox
+MAINTAINER Jeffrey Bean <jeffreyrobertbean@gmail.com>
+ADD main main
+ENTRYPOINT ["/main"]

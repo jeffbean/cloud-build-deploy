@@ -1,32 +1,17 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-
-	"gopkg.in/redis.v3"
+	"net/http"
 )
 
+var port = flag.Int("port", 8080, "Port number to serve default backend 404 page.")
+
 func main() {
-	ExampleNewClient()
-	fmt.Print("Hello")
-}
-func ExampleNewClient() {
-	host := "localhost"
-	port := "6379"
-	addr := fmt.Sprintf("%s:%s", host, port)
-	client := redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: "", // no password set
-		DB:       0,  // use default DB
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "Testing")
 	})
-
-	pong, err := client.Ping().Result()
-	fmt.Println(pong, err)
-	// Output: PONG <nil>
-}
-
-func checkErr(err error) {
-	if err != nil {
-		panic(err)
-	}
+	http.ListenAndServe(fmt.Sprintf(":%d", *port), nil)
 }
